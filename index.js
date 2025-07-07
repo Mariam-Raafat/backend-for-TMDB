@@ -11,38 +11,42 @@ app.get("/", (req, res) => {
 });
 const translations = {
   en: {
-    Title: 'Movie App',
-    Welcome: 'Welcome to our movie app',
-    'NOW Playing': 'Now Playing',
-    Watchlist: 'Watchlist',
-    Search: 'Search'
+  Welcome: "Welcome to our movie app",
+  Explore: "Millions of movies, TV shows and people to discover. Explore now.",
+  SearchPlaceholder: "Search and explore...",
+  Search: "Search",
+  NowPlaying: "Now Playing",
+  NoMovies: "There are no movies available"
   },
   ar: {
-    Title: 'تطبيق الأفلام',
-    Welcome: 'مرحبًا بك في تطبيق الأفلام الخاص بنا',
-    'NOW Playing': 'يعرض الآن',
-    Watchlist: 'المفضلة',
-    Search: 'بحث'
-  },
+  Welcome : "مرحبًا بك في تطبيق الأفلام الخاص بنا",
+  Explore: "ملايين من الأفلام والبرامج التلفزيونية والأشخاص لتكتشفهم. استكشف الآن.",
+  SearchPlaceholder: "ابحث واستكشف...",
+  Search: "بحث",
+  NowPlaying : "يعرض الآن",
+  NoMovies: "لا توجد أفلام متاحة"
+},
   fr: {
-    Title: 'Application de Films',
-    Welcome: 'Bienvenue dans notre application de films',
-    'NOW Playing': 'En cours',
-    Watchlist: 'Liste de souhaits',
-    Search: 'Chercher'
+  Welcome: "Bienvenue sur notre application de films",
+  Explore: "Des millions de films, d’émissions TV et de personnes à découvrir. Explorez maintenant.",
+  SearchPlaceholder: "Rechercher et explorer...",
+  Search: "Rechercher",
+  NowPlaying: "Actuellement à l’affiche",
+  NoMovies: "Aucun film disponible"
   },
   zh: {
-    Title: '电影应用程序',
-    Welcome: '欢迎使用我们的电影应用程序',
-    'NOW Playing': '正在播放',
-    Watchlist: '愿望清单',
-    Search: '搜索'
-  }
+  Welcome: "欢迎使用我们的电影应用程序",
+  Explore: "数百万部电影、电视节目和人物等你发现。立即探索。",
+  SearchPlaceholder: "搜索并探索...",
+  Search: "搜索",
+  NowPlaying: "正在热映",
+  NoMovies: "暂无可用电影"
+  },
 };
-app.get('/api/translations', (req, res) => {
+app.get("/api/translations", (req, res) => {
   const { lang } = req.query;
   if (!lang || !translations[lang]) {
-    return res.status(400).json({ error: 'Invalid or missing language code' });
+    return res.status(400).json({ error: "Invalid or missing language code" });
   }
   res.json(translations[lang]);
 });
@@ -50,7 +54,7 @@ app.get('/api/translations', (req, res) => {
 const API_KEY = process.env.TMDB_API_KEY;
 
 app.get("/api/tmdb", async (req, res) => {
-  const { endpoint, language = 'en-US', ...rest } = req.query;
+  const { endpoint, language = "en-US", ...rest } = req.query;
 
   if (!endpoint) {
     return res.status(400).json({ error: "endpoint parameter is required" });
@@ -75,9 +79,7 @@ app.get("/api/tmdb", async (req, res) => {
 
       data.results = data.results.map((item) => ({
         ...item,
-        poster_url: item.poster_path
-          ? IMAGE_BASE_URL + item.poster_path
-          : null,
+        poster_url: item.poster_path ? IMAGE_BASE_URL + item.poster_path : null,
       }));
 
       console.log("✅ poster_url mapping done");
