@@ -9,11 +9,48 @@ app.use(cors());
 app.get("/", (req, res) => {
   res.send("✅ Backend for TMDB is running!");
 });
+const translations = {
+  en: {
+    Title: 'Movie App',
+    Welcome: 'Welcome to our movie app',
+    'NOW Playing': 'Now Playing',
+    Watchlist: 'Watchlist',
+    Search: 'Search'
+  },
+  ar: {
+    Title: 'تطبيق الأفلام',
+    Welcome: 'مرحبًا بك في تطبيق الأفلام الخاص بنا',
+    'NOW Playing': 'يعرض الآن',
+    Watchlist: 'المفضلة',
+    Search: 'بحث'
+  },
+  fr: {
+    Title: 'Application de Films',
+    Welcome: 'Bienvenue dans notre application de films',
+    'NOW Playing': 'En cours',
+    Watchlist: 'Liste de souhaits',
+    Search: 'Chercher'
+  },
+  zh: {
+    Title: '电影应用程序',
+    Welcome: '欢迎使用我们的电影应用程序',
+    'NOW Playing': '正在播放',
+    Watchlist: '愿望清单',
+    Search: '搜索'
+  }
+};
+app.get('/api/translations', (req, res) => {
+  const { lang } = req.query;
+  if (!lang || !translations[lang]) {
+    return res.status(400).json({ error: 'Invalid or missing language code' });
+  }
+  res.json(translations[lang]);
+});
 
 const API_KEY = process.env.TMDB_API_KEY;
 
 app.get("/api/tmdb", async (req, res) => {
-  const { endpoint, ...rest } = req.query;
+  const { endpoint, language = 'en-US', ...rest } = req.query;
 
   if (!endpoint) {
     return res.status(400).json({ error: "endpoint parameter is required" });
@@ -25,7 +62,7 @@ app.get("/api/tmdb", async (req, res) => {
       {
         params: {
           api_key: API_KEY,
-          language: "en-US",
+          language,
           ...rest,
         },
       }
