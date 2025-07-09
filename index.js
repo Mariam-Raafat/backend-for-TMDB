@@ -7,40 +7,55 @@ const app = express();
 app.use(cors());
 
 app.get("/", (req, res) => {
-  res.send("✅ Backend for TMDB is running!");
+  res.send("Backend for TMDB is running!");
 });
 const translations = {
   en: {
-  Welcome: "Welcome to our movie app",
-  Explore: "Millions of movies, TV shows and people to discover. Explore now.",
-  SearchPlaceholder: "Search and explore...",
-  Search: "Search",
-  NowPlaying: "Now Playing",
-  NoMovies: "There are no movies available"
+    Title: "Movie App",
+    Watchlist: "Watchlist",
+    TvShows: "TV Shows",
+    Welcome: "Welcome to our movie app",
+    Explore:
+      "Millions of movies, TV shows and people to discover. Explore now.",
+    SearchPlaceholder: "Search and explore...",
+    Search: "Search",
+    NowPlaying: "Now Playing",
+    NoMovies: "There are no movies available",
   },
   ar: {
-  Welcome : "مرحبًا بك في تطبيق الأفلام الخاص بنا",
-  Explore: "ملايين من الأفلام والبرامج التلفزيونية والأشخاص لتكتشفهم. استكشف الآن.",
-  SearchPlaceholder: "ابحث واستكشف...",
-  Search: "بحث",
-  NowPlaying : "يعرض الآن",
-  NoMovies: "لا توجد أفلام متاحة"
-},
+    Title: " تطبيق الأفلام",
+    Watchlist: " قائمة المشاهدة",
+    TvShows: "العروض التلفزيونية",
+    Welcome: "مرحبًا بك في تطبيق الأفلام الخاص بنا",
+    Explore:
+      "ملايين من الأفلام والبرامج التلفزيونية والأشخاص لتكتشفهم. استكشف الآن.",
+    SearchPlaceholder: "ابحث واستكشف...",
+    Search: "بحث",
+    NowPlaying: "يعرض الآن",
+    NoMovies: "لا توجد أفلام متاحة",
+  },
   fr: {
-  Welcome: "Bienvenue sur notre application de films",
-  Explore: "Des millions de films, d’émissions TV et de personnes à découvrir. Explorez maintenant.",
-  SearchPlaceholder: "Rechercher et explorer...",
-  Search: "Rechercher",
-  NowPlaying: "Actuellement à l’affiche",
-  NoMovies: "Aucun film disponible"
+    Title: "Application de films",
+    Watchlist: "Liste de souhaits",
+    TvShows: "Séries télévisées",
+    Welcome: "Bienvenue sur notre application de films",
+    Explore:
+      "Des millions de films, d’émissions TV et de personnes à découvrir. Explorez maintenant.",
+    SearchPlaceholder: "Rechercher et explorer...",
+    Search: "Rechercher",
+    NowPlaying: "Actuellement à l’affiche",
+    NoMovies: "Aucun film disponible",
   },
   zh: {
-  Welcome: "欢迎使用我们的电影应用程序",
-  Explore: "数百万部电影、电视节目和人物等你发现。立即探索。",
-  SearchPlaceholder: "搜索并探索...",
-  Search: "搜索",
-  NowPlaying: "正在热映",
-  NoMovies: "暂无可用电影"
+    Title: "电影应用",
+    Watchlist: "片单",
+    TvShows: "电视剧",
+    Welcome: "欢迎使用我们的电影应用程序",
+    Explore: "数百万部电影、电视节目和人物等你发现。立即探索。",
+    SearchPlaceholder: "搜索并探索...",
+    Search: "搜索",
+    NowPlaying: "正在热映",
+    NoMovies: "暂无可用电影",
   },
 };
 app.get("/api/translations", (req, res) => {
@@ -82,19 +97,19 @@ app.get("/api/tmdb", async (req, res) => {
         poster_url: item.poster_path ? IMAGE_BASE_URL + item.poster_path : null,
       }));
 
-      console.log("✅ poster_url mapping done");
+      console.log("poster_url mapping done");
     } else {
-      console.log("❌ No results to map");
+      console.log("No results to map");
     }
 
     res.json(data);
   } catch (error) {
-    console.error("❌ Error fetching TMDB data:", error.message);
+    console.error("Error fetching TMDB data:", error.message);
     res.status(500).json({ error: "Error fetching data from TMDb" });
   }
 });
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-  console.log(`🚀 Server running at http://localhost:${PORT}`);
+  console.log(`Server running at http://localhost:${PORT}`);
 });
